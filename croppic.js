@@ -49,6 +49,8 @@
 			onBeforeImgCrop: null,
 			onAfterImgCrop: null,
 			checkFileSize: null,
+			progressBar: null,
+			progressBarContainer: null,
 			onError: null			
 		};
 
@@ -220,7 +222,30 @@
 						cache: false,
 						contentType: false,
 						processData: false,
-						type: 'POST'
+						type: 'POST',
+						async: true,
+						xhr: function() {
+
+    						if(that.options.progressBarContainer !== null && that.options.progressBar !== null) {
+    							var xhr = new window.XMLHttpRequest();	
+
+    							xhr.upload.addEventListener("progress", function(evt) {
+	      							if (evt.lengthComputable) {
+	        							var percentComplete = evt.loaded / evt.total;
+	        							percentComplete = parseInt(percentComplete * 100);
+	        							that.options.progressBarContainer.show();
+	        							that.options.progressBar.css('width', percentComplete+'%');
+
+	        							if (percentComplete === 100) {
+	        								that.options.progressBarContainer.fadeOut();
+	        							}
+
+	      							}
+	    						}, false);
+
+	    						return xhr;
+    						}
+  						}
 					}).always(function(data){
 						response = typeof data =='object' ? data : jQuery.parseJSON(data);
 						if(response.status=='success'){

@@ -108,6 +108,11 @@
 				<h4 class="centered"> MODAL </h4>
 				<p class="centered">( open in modal window )</p>
 				<div id="cropContainerModal"></div>
+				<div class="progress" id="progressBar1">
+					  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+					    <span class="sr-only">0% Complete</span>
+					  </div>
+					</div>
 			</div>
 			
 			<div class="col-lg-4 ">
@@ -578,7 +583,9 @@
 				cropUrl:'img_crop_to_file.php',
 				modal:true,
 				imgEyecandyOpacity:0.4,
-				loaderHtml:'<div class="loader bubblingG"><span id="bubblingG_1"></span><span id="bubblingG_2"></span><span id="bubblingG_3"></span></div> '
+				loaderHtml:'<div class="loader bubblingG"><span id="bubblingG_1"></span><span id="bubblingG_2"></span><span id="bubblingG_3"></span></div> ',
+				progressBar: $('#progressBar1 .progress-bar'),
+				progressBarContainer: $('#progressBar1')
 		}
 		var cropContainerModal = new Croppic('cropContainerModal', croppicContainerModalOptions);
 		

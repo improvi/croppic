@@ -6,7 +6,44 @@ Added below options:
 
 **Added checkFileSize option**
 
+Ex.
+````
+var croppicContainerModalOptions = {
+		uploadUrl:'img_save_to_file.php',
+		cropUrl:'img_crop_to_file.php',
+		modal:true,
+		imgEyecandyOpacity:0.4,
+		loaderHtml:'<div class="loader bubblingG"><span id="bubblingG_1"></span><span id="bubblingG_2"></span><span id="bubblingG_3"></span></div> ',
+		,checkFileSize: function (origFileSize) {
+			if(origFileSize > 500000) // greater than 5MB
+			{
+				alert("The uploaded file is too big. The maximum accepted file size is 5MB.");
+				return false;
+			}
+			return true;
+		}
+}
+````
+
 You can now pass a function to the checkFileSize parameter with one variable which is the size of the uploaded file.
+
+**Added Progress bar options**
+
+Option progressBar => a jQuery element of the actual progress bar where the width is set based on the uploaded status
+Option progressBarContainer => a jQuery element, this is hidden when the progressBar reaches 100%
+
+Ex.
+````
+var croppicContainerModalOptions = {
+		uploadUrl:'img_save_to_file.php',
+		cropUrl:'img_crop_to_file.php',
+		modal:true,
+		imgEyecandyOpacity:0.4,
+		loaderHtml:'<div class="loader bubblingG"><span id="bubblingG_1"></span><span id="bubblingG_2"></span><span id="bubblingG_3"></span></div> ',
+		progressBar: $('#progressBar1 .progress-bar'),
+		progressBarContainer: $('#progressBar1')
+}
+````
 
 Currently in works:
 
