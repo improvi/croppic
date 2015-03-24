@@ -4,6 +4,10 @@
  * author: Ognjen "Zmaj Džedaj" Božičković and Mat Steinlin
  */
 
+ /*
+ * Code customized by Arjun Mathai - added function checkFileSize - 03-03-2015
+ */
+
 (function (window, document) {
 
 	Croppic = function (id, options) {
@@ -44,10 +48,8 @@
 			onImgRotate: null,
 			onBeforeImgCrop: null,
 			onAfterImgCrop: null,
-			onBeforeRemoveCroppedImg: null,
-			onAfterRemoveCroppedImg: null,
-			onError: null,
-			
+			checkFileSize: null,
+			onError: null			
 		};
 
 		// OVERWRITE DEFAULT OPTIONS
@@ -149,16 +151,8 @@
 			if( !$.isEmptyObject(that.croppedImg)){
 			
 				that.cropControlRemoveCroppedImage.on('click',function(){ 
-					if (typeof (that.options.onBeforeRemoveCroppedImg) === typeof(Function)) {
-						that.options.onBeforeRemoveCroppedImg.call(that);
-					}
-					
 					that.croppedImg.remove();
 					$(this).hide();
-					
-					if (typeof (that.options.onAfterRemoveCroppedImg) === typeof(Function)) {
-						that.options.onAfterRemoveCroppedImg.call(that);
-					}
 					
 					if( !$.isEmptyObject(that.defaultImg)){ 
 						that.obj.append(that.defaultImg);
@@ -171,6 +165,11 @@
 			}
 											
 			that.form.find('input[type="file"]').change(function(){
+
+				if(that.options.checkFileSize) {
+					if(!that.options.checkFileSize(that.form.find('input[type="file"]')[0].files[0].size))
+						return false;
+				}
 				
 				if (that.options.onBeforeImgUpload) that.options.onBeforeImgUpload.call(that);
 				
@@ -493,13 +492,13 @@
 	        that.img.css({
 	            '-webkit-transform': 'rotate(' + that.actualRotation + 'deg)',
 	            '-moz-transform': 'rotate(' + that.actualRotation + 'deg)',
-	            'transform': 'rotate(' + that.actualRotation + 'deg)',
+	            'transform': 'rotate(' + that.actualRotation + 'deg)'
 	        });
 	        if(that.options.imgEyecandy) {
 	            that.imgEyecandy.css({
 	                '-webkit-transform': 'rotate(' + that.actualRotation + 'deg)',
 	                '-moz-transform': 'rotate(' + that.actualRotation + 'deg)',
-	                'transform': 'rotate(' + that.actualRotation + 'deg)',
+	                'transform': 'rotate(' + that.actualRotation + 'deg)'
 	            });
 	        }
 	        if (typeof that.options.onImgRotate == 'function')

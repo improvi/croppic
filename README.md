@@ -2,6 +2,12 @@ see full documentation at http://www.croppic.net/
 
 works in IE 10+, chrome, firefox, safari and opera.
 
+Added below options:
+
+**Added checkFileSize option**
+
+You can now pass a function to the checkFileSize parameter with one variable which is the size of the uploaded file.
+
 Currently in works:
 
 - Mobile Support
